@@ -2,8 +2,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAuth } from '@/app/components/AuthProvider';
 
 const VenueCard = ({ id, name, location, capacity, price, image }) => {
+  const { isAuthenticated } = useAuth();
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition group">
       {/* Clickable image/title */}
@@ -30,10 +32,10 @@ const VenueCard = ({ id, name, location, capacity, price, image }) => {
 
         {/* Book Now */}
         <Link
-          href={`/venues/${id}#booking`}
+          href={isAuthenticated ? `/venues/${id}#booking` : '/login'}
           className="mt-4 block text-center bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition"
         >
-          Book Now
+          {isAuthenticated ? 'Book Now' : 'Login to Book'}
         </Link>
       </div>
     </div>
